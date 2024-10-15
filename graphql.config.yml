@@ -1,0 +1,12 @@
+schema: ./src/schema.graphql
+generates:
+  ./src/schemaTypes.ts:
+    config:
+      contextType: ./GQLContext#GQLContext
+      useIndexSignature: true
+      scalars:
+        DateTime: Date
+        JSON: any
+    plugins:
+      - typescript
+      - typescript-resolvers
