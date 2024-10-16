@@ -16,6 +16,11 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type Query = {
+  __typename?: 'Query';
+  user?: Maybe<User>;
+};
+
 export type User = {
   __typename?: 'User';
   name: Scalars['String']['output'];
@@ -94,6 +99,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
+  Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   User: ResolverTypeWrapper<User>;
 }>;
@@ -101,8 +107,13 @@ export type ResolversTypes = ResolversObject<{
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean']['output'];
+  Query: {};
   String: Scalars['String']['output'];
   User: User;
+}>;
+
+export type QueryResolvers<ContextType = GQLContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
 }>;
 
 export type UserResolvers<ContextType = GQLContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
@@ -111,6 +122,7 @@ export type UserResolvers<ContextType = GQLContext, ParentType extends Resolvers
 }>;
 
 export type Resolvers<ContextType = GQLContext> = ResolversObject<{
+  Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 }>;
 
