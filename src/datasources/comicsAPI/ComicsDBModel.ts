@@ -6,7 +6,7 @@ export type ComicDB = ComicModel & Document<string>;
 const ComicDBSchema = new Schema(
   {
     name: { type: String, required: true },
-    person_credits: { type: String, required: true },
+    person_credits: { type: [String], required: true },
     description: { type: String, required: true },
     image: { type: String, required: true },
     issue_number: { type: Number, required: true },
@@ -17,4 +17,4 @@ const ComicDBSchema = new Schema(
   { timestamps: true }
 );
 
-export const comicDBModel = mongoose.model<ComicDB>("comic", ComicDBSchema);
+export const comicDBModel = mongoose.model<ComicDB>("comics", ComicDBSchema);
