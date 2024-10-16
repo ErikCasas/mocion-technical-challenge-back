@@ -124,6 +124,7 @@ function initServer(id: number, disconnect: () => void) {
 
 throng({
   workers: 1,
+  count: 1,
   lifetime: Infinity,
   start: initServer,
 }).catch(displayStartServerError);

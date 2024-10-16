@@ -3,6 +3,9 @@ generates:
   ./src/schemaTypes.ts:
     config:
       contextType: ./GQLContext#GQLContext
+      mappers:
+        User: ./models/UserModel#UserModel
+        Comic: ./models/ComicModel#ComicModel
       useIndexSignature: true
       scalars:
         DateTime: Date

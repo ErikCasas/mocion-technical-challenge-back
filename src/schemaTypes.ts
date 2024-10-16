@@ -1,4 +1,6 @@
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import { UserModel } from './models/UserModel';
+import { ComicModel } from './models/ComicModel';
 import { GQLContext } from './GQLContext';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -14,15 +16,67 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  DateTime: { input: Date; output: Date; }
+};
+
+export type Comic = {
+  __typename?: 'Comic';
+  cover_date?: Maybe<Scalars['DateTime']['output']>;
+  description: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  image: Scalars['String']['output'];
+  issue_number?: Maybe<Scalars['Int']['output']>;
+  name: Scalars['String']['output'];
+  person_credits?: Maybe<Array<InfoUser>>;
+  publisher?: Maybe<Scalars['String']['output']>;
+  volume?: Maybe<Scalars['Int']['output']>;
+};
+
+export type FilterInput = {
+  __typename?: 'FilterInput';
+  limit?: Maybe<Scalars['Int']['output']>;
+  offSet?: Maybe<Scalars['Int']['output']>;
+};
+
+export type InfoUser = {
+  __typename?: 'InfoUser';
+  imageURL: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  registerUser: User;
+};
+
+
+export type MutationRegisterUserArgs = {
+  registerUserInput?: InputMaybe<RegisterUserInput>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  user?: Maybe<User>;
+  comic: Comic;
+  comics: Array<Comic>;
+  user: User;
+};
+
+
+export type QueryComicsArgs = {
+  filterInput?: InputMaybe<FilterInput>;
+};
+
+export type RegisterUserInput = {
+  email: Scalars['String']['input'];
+  id: Scalars['ID']['input'];
+  name: Scalars['String']['input'];
 };
 
 export type User = {
   __typename?: 'User';
+  email: Scalars['String']['output'];
+  favoriteComics: Array<Comic>;
+  id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
 };
 
@@ -99,29 +153,88 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
+  Comic: ResolverTypeWrapper<ComicModel>;
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
+  FilterInput: ResolverTypeWrapper<FilterInput>;
+  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
+  InfoUser: ResolverTypeWrapper<InfoUser>;
+  Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+  Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
+  RegisterUserInput: RegisterUserInput;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
-  User: ResolverTypeWrapper<User>;
+  User: ResolverTypeWrapper<UserModel>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean']['output'];
+  Comic: ComicModel;
+  DateTime: Scalars['DateTime']['output'];
+  FilterInput: FilterInput;
+  ID: Scalars['ID']['output'];
+  InfoUser: InfoUser;
+  Int: Scalars['Int']['output'];
+  Mutation: {};
   Query: {};
+  RegisterUserInput: RegisterUserInput;
   String: Scalars['String']['output'];
-  User: User;
+  User: UserModel;
+}>;
+
+export type ComicResolvers<ContextType = GQLContext, ParentType extends ResolversParentTypes['Comic'] = ResolversParentTypes['Comic']> = ResolversObject<{
+  cover_date?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  image?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  issue_number?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  person_credits?: Resolver<Maybe<Array<ResolversTypes['InfoUser']>>, ParentType, ContextType>;
+  publisher?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  volume?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
+  name: 'DateTime';
+}
+
+export type FilterInputResolvers<ContextType = GQLContext, ParentType extends ResolversParentTypes['FilterInput'] = ResolversParentTypes['FilterInput']> = ResolversObject<{
+  limit?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  offSet?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type InfoUserResolvers<ContextType = GQLContext, ParentType extends ResolversParentTypes['InfoUser'] = ResolversParentTypes['InfoUser']> = ResolversObject<{
+  imageURL?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type MutationResolvers<ContextType = GQLContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  registerUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, Partial<MutationRegisterUserArgs>>;
 }>;
 
 export type QueryResolvers<ContextType = GQLContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  comic?: Resolver<ResolversTypes['Comic'], ParentType, ContextType>;
+  comics?: Resolver<Array<ResolversTypes['Comic']>, ParentType, ContextType, Partial<QueryComicsArgs>>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
 }>;
 
 export type UserResolvers<ContextType = GQLContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  favoriteComics?: Resolver<Array<ResolversTypes['Comic']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = GQLContext> = ResolversObject<{
+  Comic?: ComicResolvers<ContextType>;
+  DateTime?: GraphQLScalarType;
+  FilterInput?: FilterInputResolvers<ContextType>;
+  InfoUser?: InfoUserResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 }>;

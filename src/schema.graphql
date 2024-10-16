@@ -1,7 +1,50 @@
-type User {
+scalar DateTime
+
+# inputs----------------
+input RegisterUserInput {
+  id: ID!
+  email: String!
+  name: String!
+}
+# end of inputs----------
+# types ----------------
+
+type InfoUser {
+  imageURL: String!
   name: String!
 }
 
+type Comic {
+  id: ID!
+  name: String!
+  person_credits: [InfoUser!]
+  description: String!
+  image: String!
+  issue_number: Int
+  cover_date: DateTime
+  volume: Int
+  publisher: String
+}
+
+type User @cacheControl(scope: PRIVATE) {
+  id: ID!
+  email: String!
+  name: String!
+  favoriteComics: [Comic!]!
+}
+
+type FilterInput {
+  offSet: Int
+  limit: Int
+}
+# end of types -----------
+
 type Query {
-  user: User
+  user: User!
+  comic: Comic!
+  comics(filterInput: FilterInput): [Comic!]!
+}
+
+type Mutation {
+  registerUser(registerUserInput: RegisterUserInput): User!
 }
