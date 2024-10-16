@@ -1,3 +1,4 @@
+import { GraphQLError } from "graphql";
 import { config } from "../config";
 import { UserModel } from "../models/UserModel";
 import jwt from "jsonwebtoken";
@@ -12,5 +13,12 @@ export const generateToken = (user: Omit<UserModel, "id">): string => {
   return signedToken;
 };
 
-// parseJWT
-// verifyJWT
+// TODO: this can be better
+export const isValidJWT = (token: string): boolean => {
+  jwt.verify(token, config.JWT_KEY, (err) => {
+    if (err) {
+      throw new GraphQLError("JWT invalid");
+    }
+  });
+  return true;
+};

@@ -11,6 +11,7 @@ export class ComicsAPI extends MongoDataSource<ComicDB> {
   constructor() {
     super({ modelOrCollection: comicDBModel });
   }
+
   async getComics(
     comicsInput: ComicsInput,
     context: GQLContext

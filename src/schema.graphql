@@ -29,15 +29,10 @@ input ComicsInput {
 }
 # types ----------------
 
-type InfoUser {
-  imageURL: String!
-  name: String!
-}
-
 type Comic {
   id: ID!
   name: String!
-  person_credits: [InfoUser!]
+  person_credits: [String]
   description: String!
   image: String!
   issue_number: Int
