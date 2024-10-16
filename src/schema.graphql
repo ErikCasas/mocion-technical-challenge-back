@@ -1,12 +1,32 @@
 scalar DateTime
 
+enum SortDirection {
+  ASC
+  DESC
+}
 # inputs----------------
-input RegisterUserInput {
-  id: ID!
+input CreateUserInput {
   email: String!
   name: String!
+  nickname: String!
+  password: String!
 }
 # end of inputs----------
+
+input OrderByInput {
+  field: String!
+  direction: SortDirection!
+}
+
+input FilterInput {
+  limit: Int
+  offset: Int
+  publisher: String
+  orderBy: OrderByInput
+}
+input ComicsInput {
+  filter: FilterInput
+}
 # types ----------------
 
 type InfoUser {
@@ -26,25 +46,21 @@ type Comic {
   publisher: String
 }
 
-type User @cacheControl(scope: PRIVATE) {
+type User {
   id: ID!
   email: String!
   name: String!
-  favoriteComics: [Comic!]!
+  nickName: String!
+  favoriteComics: [Comic!]
 }
 
-type FilterInput {
-  offSet: Int
-  limit: Int
-}
 # end of types -----------
 
 type Query {
-  user: User!
-  comic: Comic!
-  comics(filterInput: FilterInput): [Comic!]!
+  comic(id: ID!): Comic!
+  comics(comicsInput: ComicsInput!): [Comic!]!
 }
 
 type Mutation {
-  registerUser(registerUserInput: RegisterUserInput): User!
+  createUser(createUserInput: CreateUserInput!): User!
 }

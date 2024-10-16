@@ -11,7 +11,7 @@ import defaultHandler from "./handlers/defaultHandler";
 import { unwrapResolverError } from "@apollo/server/errors";
 import { resolvers } from "./resolvers";
 import { config } from "./config";
-import { GQLContext } from "GQLContext";
+import { GQLContext } from "./GQLContext";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { logApiError } from "./utils/APIErrorLog";
@@ -21,7 +21,6 @@ import { notUndefined } from "./utils/typeguards";
 import { ApolloServerPluginLandingPageLocalDefault } from "@apollo/server/plugin/landingPage/default";
 
 const isDev = config.NODE_ENV !== "production";
-console.log(isDev);
 
 const typeDefs = loadSchemaSync("./src/schema.graphql", {
   loaders: [new GraphQLFileLoader()],
@@ -125,6 +124,5 @@ function initServer(id: number, disconnect: () => void) {
 throng({
   workers: 1,
   count: 1,
-  lifetime: Infinity,
   start: initServer,
 }).catch(displayStartServerError);

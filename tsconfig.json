@@ -9,14 +9,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": "./src",
-    "paths": {
-      "@GQLContext": ["./GQLContext"],
-      "@utils/*": ["./utils/*"],
-      "@jwtUtils": ["./utils/jwtUtils"],
-      "@models": ["./models/*"]
-    }
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "**/*.test.{ts,tsx}", "scripts/**/*"]

@@ -10,6 +10,7 @@ export const createContext = async (req: {
     ? req.headers.authorization.split("Bearer ")?.[1]
     : "";
 
+  // TODO validar el token
   return {
     jwt: jwe,
     dataSources,
