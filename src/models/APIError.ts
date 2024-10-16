@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type Severity = "error" | "warning" | "info";
 
 export class APIError extends Error {

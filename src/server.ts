@@ -32,6 +32,7 @@ const jsonErrorHandler = (
   res: express.Response,
   _next: express.NextFunction
 ) => {
+  // eslint-disable-next-line no-console
   console.error("server error", err);
 
   if (err instanceof HTTPError) {
@@ -64,6 +65,7 @@ const startApolloServer = async () => {
     },
     formatError: (formattedError, error) => {
       if (formattedError.extensions?.code === "JWT_EXPIRED") {
+        // eslint-disable-next-line no-console
         console.log(formattedError);
       } else {
         const unwrappedError = unwrapResolverError(error);
@@ -71,6 +73,7 @@ const startApolloServer = async () => {
         if (unwrappedError instanceof APIError) {
           logApiError(unwrappedError);
         } else {
+          // eslint-disable-next-line no-console
           console.error(error);
         }
       }
@@ -94,6 +97,7 @@ const startApolloServer = async () => {
   app.use(jsonErrorHandler);
 
   app.listen({ port: config.PORT }, () => {
+    // eslint-disable-next-line no-console
     console.log(
       `🚀 Ada GraphQL Server ready at http://localhost:${config.PORT}/graphql`
     );
@@ -102,6 +106,7 @@ const startApolloServer = async () => {
 
 const displayStartServerError = (error: any) => {
   const message: string = error.message ?? "Error starting server";
+  // eslint-disable-next-line no-console
   console.error(`GraphQL Server Error: ${message}`);
   process.exit(1);
 };
@@ -111,11 +116,12 @@ function initServer(id: number, disconnect: () => void) {
   process.once("SIGINT", shutdown);
 
   connectMongo();
-
+  // eslint-disable-next-line no-console
   console.log(`Starting worker: ${id}`);
   startApolloServer().catch(displayStartServerError);
 
   function shutdown() {
+    // eslint-disable-next-line no-console
     console.error(`Worker ${id} shutdown`);
     disconnect();
   }

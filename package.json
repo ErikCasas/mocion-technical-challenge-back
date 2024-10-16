@@ -7,7 +7,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "gen": "graphql-codegen --config graphql.config.yml"
+    "gen": "graphql-codegen --config graphql.config.yml",
+    "lint": "eslint .",
+    "populate": "ts-node scripts/populateDB.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.12.0",
@@ -15,6 +17,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/compression": "^1.7.5",
     "@types/cors": "^2.8.17",
+    "@types/eslint__js": "^8.42.3",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/throng": "^5.0.7",
     "@types/validator": "^13.12.2",

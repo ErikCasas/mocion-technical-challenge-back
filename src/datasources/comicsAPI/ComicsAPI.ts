@@ -1,6 +1,6 @@
 import { MongoDataSource } from "apollo-datasource-mongodb";
 import { ComicModel } from "../../models/ComicModel";
-import { ComicsInput, FilterInput } from "../../schemaTypes";
+import { ComicsInput } from "../../schemaTypes";
 import { GQLContext } from "../../GQLContext";
 import { FilterQuery, QueryOptions } from "mongoose";
 import { APIS } from "../../types/APIS";

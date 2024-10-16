@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type HTTPErrorOptions = {
   status?: number;
   message?: string;

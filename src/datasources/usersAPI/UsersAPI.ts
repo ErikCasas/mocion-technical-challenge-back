@@ -22,7 +22,7 @@ export class UsersAPI extends MongoDataSource<UserDB> {
 
     const existingEmail = await this.model.exists({ email }).lean();
 
-    if (!!existingEmail) {
+    if (existingEmail) {
       throw new Error(`${APIS.UsersAPI}: This user already are register`);
     }
 
