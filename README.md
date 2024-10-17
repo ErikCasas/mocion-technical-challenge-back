@@ -22,8 +22,7 @@ Este es el servidor backend del proyecto **Mocion Technical Challenge**. A conti
 1. **Clona el repositorio**:
 
    ```bash
-   git clone https://github.com/ErikCasas/mocion-technical-challenge.git
-   cd mocion-technical-challenge
+   git clone https://github.com/ErikCasas/mocion-technical-challenge-back.git
    ```
 
 2. **Instala las dependencias**:
