@@ -52,6 +52,7 @@ type User {
 # end of types -----------
 
 type Query {
+  user: User!
   comic(id: ID!): Comic!
   comics(comicsInput: ComicsInput!): [Comic!]!
 }

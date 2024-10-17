@@ -45,6 +45,7 @@ router.post("/sign-in", timeoutMiddleware(), async (req, res) => {
 
 router.post("/sign-up", timeoutMiddleware(), async (req, res) => {
   const body = req.body;
+
   const { email, password, name, nickname } = body;
 
   try {

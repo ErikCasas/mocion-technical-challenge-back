@@ -1,4 +1,5 @@
 import { GQLContext } from "../../GQLContext";
+import { parseJWT } from "../../jwtUtils/jwtUtils";
 import { UserModel } from "../../models/UserModel";
 import { CreateUserInput } from "../../schemaTypes";
 import { APIS } from "../../types/APIS";
@@ -55,8 +56,7 @@ export class UsersAPI extends MongoDataSource<UserDB> {
 
     const user = await this.model
       .findOne({ email: email.toLowerCase() })
-      .select("+password")
-      .lean();
+      .select("+password");
 
     if (!user) {
       throw new Error("Invalid credentials");
@@ -66,6 +66,22 @@ export class UsersAPI extends MongoDataSource<UserDB> {
 
     if (!isValidPassword) {
       throw new Error("Invalid credentials");
+    }
+
+    return user;
+  }
+
+  async getUser(context: GQLContext) {
+    if (!context.jwt) {
+      throw new Error("Unauthorized");
+    }
+
+    const { id } = await parseJWT(context.jwt);
+
+    const user = await this.model.findById(id);
+
+    if (!user) {
+      throw new Error(`${APIS.UsersAPI}: User not found`);
     }
 
     return user;

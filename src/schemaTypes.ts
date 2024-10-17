@@ -70,6 +70,7 @@ export type Query = {
   __typename?: 'Query';
   comic: Comic;
   comics: Array<Comic>;
+  user: User;
 };
 
 
@@ -225,6 +226,7 @@ export type MutationResolvers<ContextType = GQLContext, ParentType extends Resol
 export type QueryResolvers<ContextType = GQLContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   comic?: Resolver<ResolversTypes['Comic'], ParentType, ContextType, RequireFields<QueryComicArgs, 'id'>>;
   comics?: Resolver<Array<ResolversTypes['Comic']>, ParentType, ContextType, RequireFields<QueryComicsArgs, 'comicsInput'>>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
 }>;
 
 export type UserResolvers<ContextType = GQLContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{

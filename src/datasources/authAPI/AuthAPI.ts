@@ -24,24 +24,19 @@ export class AuthAPI extends DataSource {
       throw new Error("AuthAPI: invalid email");
     }
 
-    if (name.length >= 4 && name.length <= 12) {
+    if (name.length <= 3 && name.length <= 12) {
       throw new Error("AuthAPI: invalid name");
     }
 
-    if (nickname.length >= 4 && nickname.length <= 12) {
+    if (nickname.length <= 3 && nickname.length <= 12) {
       throw new Error("AuthAPI: invalid nickName");
     }
 
-    if (password.length >= 7 && password.length <= 16) {
+    if (password.length <= 6 && password.length <= 16) {
       throw new Error("AuthAPI: invalid passowrd");
     }
 
-    const user = {
-      name,
-      email,
-      nickname,
-    };
-    const token = generateToken(user);
+    const token = generateServiceToken();
     const context = getRawContext(token, this);
 
     const { id } = await context.dataSources.usersAPI.createUser({
@@ -50,7 +45,6 @@ export class AuthAPI extends DataSource {
       nickname,
       password,
     });
-
     return { id };
   }
 
@@ -90,8 +84,12 @@ export class AuthAPI extends DataSource {
           message: "Invalid username or password",
         });
       }
-
-      return generateToken(user);
+      const token = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      };
+      return generateToken(token);
     } catch (err) {
       const msg =
         err instanceof HTTPError && "message" in err ? err.message : "";
