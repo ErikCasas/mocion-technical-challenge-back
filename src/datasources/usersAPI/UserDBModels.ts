@@ -9,6 +9,7 @@ const userDBSchema = new Schema(
     email: { type: String, required: true, lowercase: true },
     nickname: { type: String, required: true, lowercase: true },
     password: { type: String, required: true, select: false },
+    favoriteComicsIds: { type: [mongoose.Types.ObjectId], required: true },
   },
   { timestamps: true }
 );

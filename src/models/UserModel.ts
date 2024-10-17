@@ -4,4 +4,5 @@ export interface UserModel {
   email: string;
   nickname: string;
   password?: string;
+  favoriteComicsIds: Array<string>;
 }

@@ -39,6 +39,7 @@ type Comic {
   cover_date: DateTime
   volume: Int
   publisher: String
+  isLiked: Boolean
 }
 
 type User {
@@ -59,4 +60,6 @@ type Query {
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
+
+  addFavoriteComic(comicId: ID!): Comic!
 }

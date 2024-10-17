@@ -72,7 +72,7 @@ export class ComicsAPI extends MongoDataSource<ComicDB> {
       throw new Error(`${APIS.ComicsAPI}: invalid ID`);
     }
 
-    const comic = await this.model.findById(id).lean();
+    const comic = await this.model.findById(id);
 
     if (!comic) {
       throw new Error(`${APIS.ComicsAPI}: comic not found`);
@@ -88,22 +88,15 @@ export class ComicsAPI extends MongoDataSource<ComicDB> {
     if (!context.jwt) {
       throw new Error(`${APIS.ComicsAPI}: Unauthorized`);
     }
+    const allValidIds = ids.every((id) => isMongoId(id.toString()));
 
-    const areValidIds = ids.some((id) => isMongoId(id));
-
-    if (!areValidIds) {
+    if (!allValidIds) {
       throw new Error(`${APIS.ComicsAPI}: some ids are invalid`);
     }
 
-    const comics = await this.model
-      .find({
-        id: { $in: ids },
-      })
-      .lean();
-
-    if (!comics.length) {
-      throw new Error(`${APIS.ComicsAPI}: no one comic found`);
-    }
+    const comics = await this.model.find({
+      _id: { $in: ids },
+    });
 
     return comics;
   }
