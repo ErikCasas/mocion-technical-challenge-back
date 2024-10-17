@@ -93,7 +93,7 @@ export type User = {
   favoriteComics?: Maybe<Array<Comic>>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
-  nickName: Scalars['String']['output'];
+  nickname: Scalars['String']['output'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -232,7 +232,7 @@ export type UserResolvers<ContextType = GQLContext, ParentType extends Resolvers
   favoriteComics?: Resolver<Maybe<Array<ResolversTypes['Comic']>>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  nickName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  nickname?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

@@ -45,7 +45,7 @@ type User {
   id: ID!
   email: String!
   name: String!
-  nickName: String!
+  nickname: String!
   favoriteComics: [Comic!]
 }
 

@@ -22,3 +22,11 @@ export const isValidJWT = (token: string): boolean => {
   });
   return true;
 };
+
+export const generateServiceToken = (): string => {
+  const payload = {
+    name: "service",
+  };
+
+  return jwt.sign(payload, config.JWT_KEY, { expiresIn: "1m" });
+};

@@ -1,3 +1,4 @@
+import { GQLContext } from "../../GQLContext";
 import { UserModel } from "../../models/UserModel";
 import { CreateUserInput } from "../../schemaTypes";
 import { APIS } from "../../types/APIS";
@@ -37,5 +38,36 @@ export class UsersAPI extends MongoDataSource<UserDB> {
     userInput.password = await bcrypt.hash(password, 10);
 
     return await this.model.create(userInput);
+  }
+  async getByCredentials(
+    {
+      email,
+      password,
+    }: {
+      email: string;
+      password: string;
+    },
+    context: GQLContext
+  ): Promise<UserModel> {
+    if (!context.jwt) {
+      throw new Error("Unauthorized");
+    }
+
+    const user = await this.model
+      .findOne({ email: email.toLowerCase() })
+      .select("+password")
+      .lean();
+
+    if (!user) {
+      throw new Error("Invalid credentials");
+    }
+
+    const isValidPassword = await bcrypt.compare(password, user.password ?? "");
+
+    if (!isValidPassword) {
+      throw new Error("Invalid credentials");
+    }
+
+    return user;
   }
 }

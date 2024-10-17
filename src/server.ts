@@ -19,6 +19,7 @@ import { createContext } from "./utils/createContext";
 import { connectMongo } from "./db/DBconnection";
 import { notUndefined } from "./utils/typeguards";
 import { ApolloServerPluginLandingPageLocalDefault } from "@apollo/server/plugin/landingPage/default";
+import authAPIHandler from "./handlers/authAPIHandler";
 
 const isDev = config.NODE_ENV !== "production";
 
@@ -52,7 +53,7 @@ const startApolloServer = async () => {
 
   app.use(cors({ origin: "*" }));
 
-  // app.use("/v1/auth", authAPIHandler);
+  app.use("/v1/auth", json(), authAPIHandler);
   const server = new ApolloServer<GQLContext>({
     typeDefs,
     resolvers,
@@ -128,7 +129,6 @@ function initServer(id: number, disconnect: () => void) {
 }
 
 throng({
-  workers: 1,
   count: 1,
   start: initServer,
 }).catch(displayStartServerError);
